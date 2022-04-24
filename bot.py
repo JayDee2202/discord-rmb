@@ -25,10 +25,12 @@ class MyClient(discord.Client):
 
             # Add dest role if member is in at least one source role
             if role_dest not in member_after_role_ids and (role_source1 not in member_before_role_ids or role_source2 not in member_before_role_ids) and (role_source1 in member_after_role_ids or role_source2 in member_after_role_ids):
+                print('Adding userrole to', member.name)
                 await after.add_roles(discord.utils.get(after.guild.roles, id=role_dest))
 
             # Remove dest role if member is in no source role
             if role_dest in member_after_role_ids and (role_source1 not in member_after_role_ids and role_source2 not in member_after_role_ids):
+                print('Removing userrole from', member.name)
                 await after.remove_roles(discord.utils.get(after.guild.roles, id=role_dest))
 
     async def my_background_task(self):
@@ -44,10 +46,12 @@ class MyClient(discord.Client):
 
                 if role_dest not in member_roles and (role_source1 in member_roles or role_source2 in member_roles):
                     role = discord.utils.get(member.guild.roles, id=role_dest)
+                    print('Adding userrole to', member.)
                     await member.add_roles(role)
 
                 if role_dest in member_roles and (role_source1 not in member_roles and role_source2 not in member_roles):
                     role = discord.utils.get(member.guild.roles, id=role_dest)
+                    print('Removing userrole from', member.name)
                     await member.remove_roles(role)
 
             await asyncio.sleep(60 * 60)  # This asyncio task runs every hour
