@@ -7,4 +7,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY bot.py .
 
-ENTRYPOINT [ "python", "./markov_bot.py" ]
+ENTRYPOINT [ "python", "-u", "./bot.py" ]
