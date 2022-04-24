@@ -1,6 +1,26 @@
 import discord
 import asyncio
 import os
+import sys
+
+needed_envvars = ['DISCORD_ROLE_SOURCE1', 'DISCORD_ROLE_SOURCE2', 'DISCORD_ROLE_DEST', 'DISCORD_SERVER_ID', 'DISCORD_TOKEN']
+missing_envvars = []
+using_default = False
+
+for envvar in needed_envvars:
+    if os.getenv(envvar) is None or len(os.getenv(envvar)) == 0:
+        missing_envvars.append(envvar)
+
+    if os.getenv(envvar) == '1234123412341234' or os.getenv(envvar) == '1234123412341235' or os.getenv(envvar) == '1234123412341236':
+        print(f"Warning: You are using the default value for {envvar}, please change it!")
+        using_default = True
+
+if len(missing_envvars) > 0:
+    print("Error: Please add the environment variables: " + ", ".join(missing_envvars))
+    sys.exit(1)
+
+if using_default:
+    sys.exit(1)
 
 
 class MyClient(discord.Client):
@@ -25,12 +45,12 @@ class MyClient(discord.Client):
 
             # Add dest role if member is in at least one source role
             if role_dest not in member_after_role_ids and (role_source1 not in member_before_role_ids or role_source2 not in member_before_role_ids) and (role_source1 in member_after_role_ids or role_source2 in member_after_role_ids):
-                print('Adding userrole to', member.name)
+                print('Adding userrole to', after.name)
                 await after.add_roles(discord.utils.get(after.guild.roles, id=role_dest))
 
             # Remove dest role if member is in no source role
             if role_dest in member_after_role_ids and (role_source1 not in member_after_role_ids and role_source2 not in member_after_role_ids):
-                print('Removing userrole from', member.name)
+                print('Removing userrole from', after.name)
                 await after.remove_roles(discord.utils.get(after.guild.roles, id=role_dest))
 
     async def my_background_task(self):
@@ -46,7 +66,7 @@ class MyClient(discord.Client):
 
                 if role_dest not in member_roles and (role_source1 in member_roles or role_source2 in member_roles):
                     role = discord.utils.get(member.guild.roles, id=role_dest)
-                    print('Adding userrole to', member.)
+                    print('Adding userrole to', member.name)
                     await member.add_roles(role)
 
                 if role_dest in member_roles and (role_source1 not in member_roles and role_source2 not in member_roles):
