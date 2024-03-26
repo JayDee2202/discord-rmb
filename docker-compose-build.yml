@@ -5,11 +5,12 @@ services:
     build: .
     restart: unless-stopped
     container_name: discord-rmb-bot
-    mem_limit: 128m
+    mem_limit: 64m
     environment:
       - DISCORD_ROLE_SOURCE1=1234123412341234
-      - DISCORD_ROLE_SOURCE2=1234123412341235
-      - DISCORD_ROLE_DEST=1234123412341236
+      - DISCORD_ROLE_SOURCE2=1234123412341234
+      - DISCORD_ROLE_SOURCE3=1234123412341234
+      - DISCORD_ROLE_DEST=1234123412341234
       - DISCORD_SERVER_ID=1234123412341234
       - DISCORD_TOKEN=1234123412341234
     labels:
