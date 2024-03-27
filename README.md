@@ -27,7 +27,8 @@ Der Bot ist als fertig gebauter Container auf Docker Hub verfügbar unter dem Im
 ### Selbst bauen
 
 Die `Dockerfile` als auch die `bot.py` liegen hier im Repository, ebenso kann auch mittels Docker Compose und der `docker-compose-build.yml` gebaut werden.
-
+Sollte `import discord` nicht aufgelöst werden können, muss zunächst noch [discord.py installiert werden](https://discordpy.readthedocs.io/en/stable/intro.html).
+Python 3.10 als venv ist empfehlenswert.
 
 # Discord Role Merge Bot (EN)
 
@@ -59,7 +60,8 @@ The bot is available as a built container on Docker Hub under the image name `ja
 ### Build it yourself
 
 The `Dockerfile` as well as the `bot.py` are here in the repository, likewise you can also build using Docker Compose and the `docker-compose-build.yml`.
-
+If `import discord` can't be resolved then you have to install [discord.py first](https://discordpy.readthedocs.io/en/stable/intro.html).
+It's recommended to use Python 3.10 as venv.
 
 # Credits
 
