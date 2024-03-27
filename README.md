@@ -12,6 +12,7 @@ Sicherheitshalber werden die Rollenmitgliedschaften einmal stündlich abgegliche
 Zwingend angegeben benötigt der Bot mehrere Umgebungsvariablen:
 - `DISCORD_ROLE_SOURCE1` - Rollen-ID der ersten Quell-Rolle
 - `DISCORD_ROLE_SOURCE2` - Rollen-ID der zweiten Quell-Rolle
+- `DISCORD_ROLE_SOURCE3` - Rollen-ID der zweiten Quell-Rolle (optional)
 - `DISCORD_ROLE_DEST` - Rollen-ID der Ziel-Rolle
 - `DISCORD_SERVER_ID` - Server-ID des Servers, benötigt für die Intents
 - `DISCORD_TOKEN` - Token des Bots
@@ -45,6 +46,7 @@ To be on the safe side, the role memberships are synchronized once an hour in ca
 Mandatory specified the bot needs several environment variables:
 - `DISCORD_ROLE_SOURCE1` - role ID of the first source role
 - `DISCORD_ROLE_SOURCE2` - role ID of the second source role
+- `DISCORD_ROLE_SOURCE3` - role ID of the third source role (optional)
 - `DISCORD_ROLE_DEST` - Role ID of the target role
 - `DISCORD_SERVER_ID` - server ID of the server, needed for the intents
 - `DISCORD_TOKEN` - token of the bot
