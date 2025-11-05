@@ -8,6 +8,7 @@ needed_envvars = ['DISCORD_ROLE_SOURCE1', 'DISCORD_ROLE_SOURCE2', 'DISCORD_ROLE_
 optional_envvars = ['DISCORD_ROLE_SOURCE3']
 missing_envvars = []
 using_default = False
+version = '1.5'
 
 for envvar in needed_envvars:
     if os.getenv(envvar) is None or len(os.getenv(envvar)) == 0:
@@ -33,6 +34,15 @@ class MyClient(discord.Client):
         self.bg_task = self.loop.create_task(self.my_background_task())
 
     async def on_ready(self):
+        print('██████████    ███                                          █████    ███████████   ██████   ██████ ███████████')
+        print('░░███░░░░███  ░░░                                          ░░███    ░░███░░░░░███ ░░██████ ██████ ░░███░░░░░███')
+        print('░███   ░░███ ████   █████   ██████   ██████  ████████   ███████     ░███    ░███  ░███░█████░███  ░███    ░███')
+        print('░███    ░███░░███  ███░░   ███░░███ ███░░███░░███░░███ ███░░███     ░██████████   ░███░░███ ░███  ░██████████')
+        print('░███    ░███ ░███ ░░█████ ░███ ░░░ ░███ ░███ ░███ ░░░ ░███ ░███     ░███░░░░░███  ░███ ░░░  ░███  ░███░░░░░███')
+        print('░███    ███  ░███  ░░░░███░███  ███░███ ░███ ░███     ░███ ░███     ░███    ░███  ░███      ░███  ░███    ░███')
+        print('██████████   █████ ██████ ░░██████ ░░██████  █████    ░░████████    █████   █████ █████     █████ ███████████')
+        print('░░░░░░░░░░   ░░░░░ ░░░░░░   ░░░░░░   ░░░░░░  ░░░░░      ░░░░░░░░    ░░░░░   ░░░░░ ░░░░░     ░░░░░ ░░░░░░░░░░░')
+        print('Version ',version)
         print('Logged on as', self.user)
         await self.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name="Dinge verladen!"))
 
