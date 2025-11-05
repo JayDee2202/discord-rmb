@@ -41,13 +41,14 @@ class MyClient(discord.Client):
             role_source1 = int(os.getenv('DISCORD_ROLE_SOURCE1'))
             role_source2 = int(os.getenv('DISCORD_ROLE_SOURCE2'))
             role_dest = int(os.getenv('DISCORD_ROLE_DEST'))
+            role_source3_env = os.getenv('DISCORD_ROLE_SOURCE3')
+            role_source3 = int(role_source3_env) if role_source3_env else None
 
             member_before_role_ids = [r.id for r in before.roles]
             member_after_role_ids = [r.id for r in after.roles]
 
             # If a third role is provided
-            if os.getenv('DISCORD_ROLE_SOURCE3') is not None or len(os.getenv('DISCORD_ROLE_SOURCE3')) > 0:
-                role_source3 = int(os.getenv('DISCORD_ROLE_SOURCE3'))
+            if os.getenv('DISCORD_ROLE_SOURCE3'):
 
                 # Add dest role if member is in at least one source role
                 if role_dest not in member_after_role_ids and (role_source1 not in member_before_role_ids or role_source2 not in member_before_role_ids or role_source3 not in member_before_role_ids) and (role_source1 in member_after_role_ids or role_source2 in member_after_role_ids or role_source3 in member_after_role_ids):
@@ -78,9 +79,8 @@ class MyClient(discord.Client):
             role_source2 = int(os.getenv('DISCORD_ROLE_SOURCE2'))
             role_dest = int(os.getenv('DISCORD_ROLE_DEST'))
             guild = discord.utils.get(client.guilds, id=int(os.getenv('DISCORD_SERVER_ID')))
-
-            if os.getenv('DISCORD_ROLE_SOURCE3') is not None or len(os.getenv('DISCORD_ROLE_SOURCE3')) > 0:
-                role_source3 = int(os.getenv('DISCORD_ROLE_SOURCE3'))
+            role_source3_env = os.getenv('DISCORD_ROLE_SOURCE3')
+            role_source3 = int(role_source3_env) if role_source3_env else None
 
             for member in guild.members:
                 member_roles = [r.id for r in member.roles]
