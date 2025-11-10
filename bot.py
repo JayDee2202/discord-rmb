@@ -2,13 +2,14 @@ import discord
 import asyncio
 import os
 import sys
+from datetime import datetime
 
 
 needed_envvars = ['DISCORD_ROLE_SOURCE1', 'DISCORD_ROLE_SOURCE2', 'DISCORD_ROLE_DEST', 'DISCORD_SERVER_ID', 'DISCORD_TOKEN']
 optional_envvars = ['DISCORD_ROLE_SOURCE3']
 missing_envvars = []
 using_default = False
-version = '1.5'
+version = '1.6'
 
 for envvar in needed_envvars:
     if os.getenv(envvar) is None or len(os.getenv(envvar)) == 0:
@@ -25,6 +26,9 @@ if len(missing_envvars) > 0:
 if using_default:
     sys.exit(1)
 
+def log(message: str):
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f"[{timestamp}] {message}")
 
 class MyClient(discord.Client):
     def __init__(self, *args, **kwargs):
@@ -35,7 +39,7 @@ class MyClient(discord.Client):
 
     async def on_ready(self):
         print('██████████    ███                                          █████    ███████████   ██████   ██████ ███████████')
-        print('░░███░░░░███  ░░░                                          ░░███    ░░███░░░░░███ ░░██████ ██████ ░░███░░░░░███')
+        print('░░███░░░░███  ░░░                                          ░░███    ░███░░░░░███  ░██████ ██████ ░░███░░░░░███')
         print('░███   ░░███ ████   █████   ██████   ██████  ████████   ███████     ░███    ░███  ░███░█████░███  ░███    ░███')
         print('░███    ░███░░███  ███░░   ███░░███ ███░░███░░███░░███ ███░░███     ░██████████   ░███░░███ ░███  ░██████████')
         print('░███    ░███ ░███ ░░█████ ░███ ░░░ ░███ ░███ ░███ ░░░ ░███ ░███     ░███░░░░░███  ░███ ░░░  ░███  ░███░░░░░███')
@@ -43,7 +47,7 @@ class MyClient(discord.Client):
         print('██████████   █████ ██████ ░░██████ ░░██████  █████    ░░████████    █████   █████ █████     █████ ███████████')
         print('░░░░░░░░░░   ░░░░░ ░░░░░░   ░░░░░░   ░░░░░░  ░░░░░      ░░░░░░░░    ░░░░░   ░░░░░ ░░░░░     ░░░░░ ░░░░░░░░░░░')
         print('Version ',version)
-        print('Logged on as', self.user)
+        log(f"Logged on as {self.user}")
         await self.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name="Dinge verladen!"))
 
     async def on_member_update(self, before, after):
@@ -62,24 +66,24 @@ class MyClient(discord.Client):
 
                 # Add dest role if member is in at least one source role
                 if role_dest not in member_after_role_ids and (role_source1 not in member_before_role_ids or role_source2 not in member_before_role_ids or role_source3 not in member_before_role_ids) and (role_source1 in member_after_role_ids or role_source2 in member_after_role_ids or role_source3 in member_after_role_ids):
-                    print('Adding userrole to', after.name)
+                    log(f"Adding userrole to {after.name}")
                     await after.add_roles(discord.utils.get(after.guild.roles, id=role_dest))
 
                 # Remove dest role if member is in no source role
                 if role_dest in member_after_role_ids and (role_source1 not in member_after_role_ids and role_source2 not in member_after_role_ids and role_source3 not in member_after_role_ids):
-                    print('Removing userrole from', after.name)
+                    log(f"Removing userrole from {after.name}")
                     await after.remove_roles(discord.utils.get(after.guild.roles, id=role_dest))
 
             # Only two roles to merge
             else:
                 # Add dest role if member is in at least one source role
                 if role_dest not in member_after_role_ids and (role_source1 not in member_before_role_ids or role_source2 not in member_before_role_ids) and (role_source1 in member_after_role_ids or role_source2 in member_after_role_ids):
-                    print('Adding userrole to', after.name)
+                    log(f"Adding userrole to {after.name}")
                     await after.add_roles(discord.utils.get(after.guild.roles, id=role_dest))
 
                 # Remove dest role if member is in no source role
                 if role_dest in member_after_role_ids and (role_source1 not in member_after_role_ids and role_source2 not in member_after_role_ids):
-                    print('Removing userrole from', after.name)
+                    log(f"Removing userrole from {after.name}")
                     await after.remove_roles(discord.utils.get(after.guild.roles, id=role_dest))
 
     async def my_background_task(self):
@@ -99,24 +103,24 @@ class MyClient(discord.Client):
                 if role_source3 is not None:
                     if role_dest not in member_roles and (role_source1 in member_roles or role_source2 in member_roles or role_source3 in member_roles):
                         role = discord.utils.get(member.guild.roles, id=role_dest)
-                        print('Adding userrole to', member.name)
+                        log(f"Adding userrole to {after.name}")
                         await member.add_roles(role)
 
                     if role_dest in member_roles and (role_source1 not in member_roles and role_source2 not in member_roles and role_source3 not in member_roles):
                         role = discord.utils.get(member.guild.roles, id=role_dest)
-                        print('Removing userrole from', member.name)
+                        log(f"Removing userrole from {after.name}")
                         await member.remove_roles(role)
 
                 # Only two roles to merge
                 else:
                     if role_dest not in member_roles and (role_source1 in member_roles or role_source2 in member_roles):
                         role = discord.utils.get(member.guild.roles, id=role_dest)
-                        print('Adding userrole to', member.name)
+                        log(f"Adding userrole to {after.name}")
                         await member.add_roles(role)
 
                     if role_dest in member_roles and (role_source1 not in member_roles and role_source2 not in member_roles):
                         role = discord.utils.get(member.guild.roles, id=role_dest)
-                        print('Removing userrole from', member.name)
+                        log(f"Removing userrole from {after.name}")
                         await member.remove_roles(role)
 
             await asyncio.sleep(60 * 60)  # This asyncio task runs every hour
